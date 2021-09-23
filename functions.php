@@ -20,5 +20,24 @@ function add_themes_features() {
 }
 add_action('after_setup_theme', 'add_themes_features');
 
+function my_post_type(){
+$args = array(
+    'labels' => array(
+        'name' => 'Employees',
+        'singular_name' => 'Employee',
+    ),
+    'hierarchical' => true, 
+    'menu_icon' => 'dashicons-admin-users',
+    'public' => true,
+    'has_archive' => true,
+    'supports' => array('title', 'editor', 'thumbnail'),
+
+
+);
+
+register_post_type('employee', $args);
+}
+add_action('init', 'my_post_type')
+
 
 ?>
