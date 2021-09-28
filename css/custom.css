@@ -1,0 +1,7 @@
+body.page:not(.home) .hero {
+    background: inherit;
+ }
+
+body {
+    background-color: blue;
+}

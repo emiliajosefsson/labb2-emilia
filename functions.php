@@ -20,13 +20,21 @@ function add_themes_features() {
 }
 add_action('after_setup_theme', 'add_themes_features');
 
+function load_stylesheets() {
+    wp_register_style('styles', get_template_directory_uri() . '/css/custom.css', array(), 1, 'all');
+    
+    
+    wp_enqueue_style('styles');
+    
+}
+
 function my_post_type(){
 $args = array(
     'labels' => array(
         'name' => 'Employees',
         'singular_name' => 'Employee',
     ),
-    'hierarchical' => true, 
+    'hierarchical' => false, 
     'menu_icon' => 'dashicons-admin-users',
     'public' => true,
     'has_archive' => true,
@@ -37,7 +45,26 @@ $args = array(
 
 register_post_type('employee', $args);
 }
-add_action('init', 'my_post_type')
+add_action('init', 'my_post_type');
+
+
+
+add_filter( 'woocommerce_billing_fields' , 'custom_override_default_phone' 
+);
+function custom_override_default_phone( $phone_fields ) {
+     $phone_fields['billing_phone']['required'] = false;
+
+     return $phone_fields;
+}
+
+add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+
+
+function custom_override_checkout_fields( $fields ) {
+     unset($fields['order']['order_comments']);
+
+     return $fields;
+}
 
 
 ?>
